@@ -24,41 +24,42 @@ int main() {
 
     for(;;){
         //printf("type")
-        printf("passou aki antes da op\n");
-        scanf(" %c \n", &op);
+        //printf("passou aki antes da op\n");
+        scanf(" %c", &op);
+        //printf("ai o %c\n", op);
         switch(op){
             case 'n':
                 //initialize
                 initialize(&head);
-                printf("passou aki inicializou\n");
+                //printf("passou aki inicializou\n");
                 break;
             case 's':
-                scanf("%d\n", &num);
-                printf("passou aki leu\n");
+                scanf(" %d\n", &num);
+                //printf("passou aki leu\n");
                 result = find(head, num);
                 if (result.desired)
                     printf("%d\n", result.desired->n);
                 //search
-                printf("passou aki acho\n");
+                //printf("passou aki acho\n");
                 break;
             case 'i':
-                scanf("%d\n", &num);
-                printf("passou aki leu\n");
+                scanf(" %d\n", &num);
+                //printf("passou aki leu\n");
                 num = insert(&head, num);
                 //insert
-                printf("passou aki inseriu\n");
+                //printf("passou aki inseriu\n");
                 break;
             case 'd':
-                scanf("%d\n", &num);
+                scanf(" %d\n", &num);
                 num = delete(&head, num);
                 //delete
                 break;
             case 'p':
                 print(head);
-                printf("passou aki print\n");
+                //printf("passou aki print\n");
                 break;
             case 'e':
-                printf("passou aki exit\n");
+                //printf("passou aki exit\n");
                 //exit
                 return 0;
             default:
@@ -86,19 +87,29 @@ tuple find(plist l, int x) {
 int insert(plist *l, int x) {
     tuple t;
     plist novo;
+    novo = (plist)malloc(sizeof(list));
 
-    t = find(*l, x);
-    if (!(t.desired)){
-        novo = (plist)malloc(sizeof(list));
+    if (!(*l)){
         if (novo){
             novo->n = x;
             novo->prox = NULL;
-            t.ant = novo;
+            *l = novo;
             return 1;
         }
     }
+    else {
+        t = find(*l, x);
+        if (!(t.desired)){
+            if (novo){
+                novo->n = x;
+                novo->prox = NULL;
+                t.ant->prox = novo;
+                return 1;
+            }
+        }
+        return 0;
+    }
 
-    return 0;
 }
 int delete(plist *l, int x) {
     tuple t;
