@@ -23,43 +23,33 @@ int main() {
     int num;
 
     for(;;){
-        //printf("type")
-        //printf("passou aki antes da op\n");
         scanf(" %c", &op);
         //printf("ai o %c\n", op);
         switch(op){
             case 'n':
                 //initialize
                 initialize(&head);
-                //printf("passou aki inicializou\n");
                 break;
             case 's':
+                //search
                 scanf(" %d\n", &num);
-                //printf("passou aki leu\n");
                 result = find(head, num);
                 if (result.desired)
                     printf("%d\n", result.desired->n);
-                //search
-                //printf("passou aki acho\n");
                 break;
             case 'i':
-                scanf(" %d\n", &num);
-                //printf("passou aki leu\n");
-                num = insert(&head, num);
                 //insert
-                //printf("passou aki inseriu\n");
+                num = insert(&head, num);
                 break;
             case 'd':
+                //delete
                 scanf(" %d\n", &num);
                 num = delete(&head, num);
-                //delete
                 break;
             case 'p':
                 print(head);
-                //printf("passou aki print\n");
                 break;
             case 'e':
-                //printf("passou aki exit\n");
                 //exit
                 return 0;
             default:
@@ -126,6 +116,6 @@ int delete(plist *l, int x) {
 
 void print(plist l) {
     for(; (l); l = l->prox){
-        printf("%ld:[%d -> %ld]\n", (long int)l, l->n, (long int)l->prox);
+        printf("endereço %ld:[%d -> %ld]\n", (long int)l, l->n, (long int)l->prox);
     }
 }
