@@ -6,47 +6,63 @@ typedef struct list {
     struct list *prox;
 }list, *plist;
 
+typedef struct tuple {
+    plist ant, desired;
+}tuple;
+
 void initialize(plist *y);
-plist find(plist l, int x);
+tuple find(plist l, int x);
 int insert(plist *l, int x);
 int delete(plist *l, int x);
 void print(plist l);
 
 int main() {
     plist head;
+    tuple result;
     char op;
     int num;
 
     for(;;){
         //printf("type")
-        scanf("%c\n", &op);
+        printf("passou aki antes da op\n");
+        scanf(" %c \n", &op);
         switch(op){
             case 'n':
                 //initialize
                 initialize(&head);
-            break;
+                printf("passou aki inicializou\n");
+                break;
             case 's':
                 scanf("%d\n", &num);
-                find(head, num);
+                printf("passou aki leu\n");
+                result = find(head, num);
+                if (result.desired)
+                    printf("%d\n", result.desired->n);
                 //search
-            break;
+                printf("passou aki acho\n");
+                break;
             case 'i':
                 scanf("%d\n", &num);
-                insert(&head, num);
+                printf("passou aki leu\n");
+                num = insert(&head, num);
                 //insert
-            break;
+                printf("passou aki inseriu\n");
+                break;
             case 'd':
                 scanf("%d\n", &num);
-                delete(&head, num);
+                num = delete(&head, num);
                 //delete
-            break;
+                break;
+            case 'p':
+                print(head);
+                printf("passou aki print\n");
+                break;
             case 'e':
+                printf("passou aki exit\n");
                 //exit
                 return 0;
-            break;
             default:
                 //invalid op
-                //printf("op invalid\n");
                 break;
         }
     }
@@ -56,18 +72,49 @@ void initialize(plist *y) {
     *y = NULL;
 }
 
-plist find(plist l, int x) {
-    for(; l && l->n != x; l=l->prox);
-    return l;
+tuple find(plist l, int x) {
+    plist ant;
+    tuple result;
+
+    for(ant = NULL; (l) && (l->n != x); ant = l, l = l->prox);
+    result.ant = ant;
+    result.desired = l;
+
+    return result;
 }
 
 int insert(plist *l, int x) {
+    tuple t;
+    plist novo;
+
+    t = find(*l, x);
+    if (!(t.desired)){
+        novo = (plist)malloc(sizeof(list));
+        if (novo){
+            novo->n = x;
+            novo->prox = NULL;
+            t.ant = novo;
+            return 1;
+        }
+    }
+
     return 0;
 }
-
 int delete(plist *l, int x) {
+    tuple t;
+
+    t = find(*l, x);
+    if (t.desired){
+        t.ant->prox = t.desired->prox;
+        free(t.desired);
+        return 1;
+    }
+
     return 0;
 }
 
 void print(plist l) {
+    for(; (l); l = l->prox){
+        printf("%ld:[%d -> %ld]\n", (long int)l, l->n, (long int)l->prox);
+    }
 }
