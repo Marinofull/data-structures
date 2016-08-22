@@ -116,7 +116,10 @@ int delete(plist *l, int x) {
 
     t = find(*l, x);
     if (t.desired){
-        t.ant->prox = t.desired->prox;
+        if (t.ant)
+            t.ant->prox = t.desired->prox;
+        else
+            *l = t.desired->prox;
         free(t.desired);
         return 1;
     }
@@ -126,6 +129,6 @@ int delete(plist *l, int x) {
 
 void print(plist l) {
     for(; (l); l = l->prox){
-        printf("%ld:[%d -> %ld]\n", (long int)l, l->n, (long int)l->prox);
+        printf("endereço %ld:[%d -> %ld]\n", (long int)l, l->n, (long int)l->prox);
     }
 }
