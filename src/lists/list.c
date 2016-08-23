@@ -99,7 +99,7 @@ int insert(plist *l, int x) {
     }
     else {
         t = find(*l, x);
-        if (!(t.desired)){
+        if (!(t.desired)){ //se for diferente de nulo então ja ta inserido
             if (novo){
                 novo->n = x;
                 novo->prox = NULL;

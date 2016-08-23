@@ -69,7 +69,7 @@ void initialize(plist *y) {
 }
 
 plist* find(plist l, int x) {
-    plist ant, *duo;
+    plist *duo;
 
     for(; (l) && (l->n != x); l->ant = l, l = l->prox);
     duo[0] = l->ant;
@@ -115,7 +115,6 @@ int delete(plist *l, int x) {
             if (t[1]->prox->ant)
                 t[1]->prox->ant = t[1]->ant;
             t[1]->ant->prox = t[1]->prox;
-            t[0]->prox = t[1]->prox;
         }
         else{
             *l = t[1]->prox;
