@@ -105,7 +105,7 @@ tuple find(plist l, int x) {
 }
 
 int insert(plist *l, int x) {
-    // tuple t;
+    tuple t;
     plist novo;
     novo = (plist)malloc(sizeof(list));
 
@@ -118,10 +118,8 @@ int insert(plist *l, int x) {
         }
     }
     else {
-        // t = find(*l, x);
-        plist p;
-        for (p=*l; p->prox; p=p->prox);
-        // if (!(t.desired)){
+        t = find(*l, x);
+        if (!(t.desired)){ //se for diferente de nulo então ja ta inserido
             if (novo){
                 novo->n = x;
                 novo->prox = NULL;
